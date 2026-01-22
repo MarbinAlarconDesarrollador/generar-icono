@@ -1,6 +1,6 @@
 # 🚀 Icono Estudio | PWA Icon Designer
 
-![Logo Empresa](./img/logo.png)
+![Logo Empresa](./img/logo_192x192.png)
 
 **Icono Estudio** es una herramienta corporativa avanzada diseñada para la creación, edición y exportación de iconos para aplicaciones web progresivas (PWA). Permite a los diseñadores y desarrolladores ajustar logotipos de forma visual, aplicar filtros y exportar en múltiples formatos listos para producción.
 
