@@ -285,11 +285,9 @@ details summary {
     line-height: 1.4;
     color: #636e72;
 }
-
 .btn-share {
     grid-column: span 2;
     background: var(--accent);
-    /* Usamos el color celeste que ya definimos */
     color: white;
     border: none;
     padding: 18px;
@@ -300,6 +298,13 @@ details summary {
     transition: all 0.3s ease;
     margin-top: 5px;
     box-shadow: 0 10px 20px rgba(76, 201, 240, 0.2);
+    justify-self: anchor-center;
+    /* Añadimos esto para asegurar que ocupe todo el ancho disponible */
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .btn-share:hover {
@@ -308,7 +313,23 @@ details summary {
     box-shadow: 0 15px 25px rgba(76, 201, 240, 0.3);
 }
 
-/* Ocultar botón si el navegador no soporta compartir archivos */
+.btn-share:active {
+    transform: translateY(0); /* Efecto de pulsación en móviles */
+}
+
+/* --- AJUSTES RESPONSIVE --- */
+
+@media (max-width: 600px) {
+    .btn-share {
+        padding: 15px; /* Un poco más pequeño para no robar pantalla */
+        font-size: 14px; /* Texto ligeramente menor */
+        border-radius: 10px;
+        margin-top: 10px;
+        grid-column: span 1; /* Si el grid cambia a 1 columna, se ajusta automáticamente */
+    }
+}
+
+/* Ocultar si no hay soporte 
 .btn-share.hidden-api {
     display: none;
-}
+}*/
