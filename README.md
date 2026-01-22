@@ -39,6 +39,8 @@
 └── img/              # Recursos gráficos y logo corporativo
     └── logo.png
 
+
+```
 ## 📄 Licencia
 Este proyecto está bajo la licencia MIT. Siéntete libre de usarlo y mejorarlo.
 
