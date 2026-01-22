@@ -329,7 +329,7 @@ details summary {
     }
 }
 
-/* Ocultar si no hay soporte 
+/* Ocultar si no hay soporte */
 .btn-share.hidden-api {
     display: none;
-}*/
+}
