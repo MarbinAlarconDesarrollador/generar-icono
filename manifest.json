@@ -1,6 +1,6 @@
 {
-  "short_name": "IconStudio",
-  "name": "Icono Estudio PWA Designer",
+  "short_name": "IconoEstudio",
+  "name": "Icono Estudio PWA Designer V2",
   "icons": [
     {
       "src": "./img/logo.png",

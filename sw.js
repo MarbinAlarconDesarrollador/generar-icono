@@ -1,4 +1,4 @@
-const CACHE_NAME = 'icon-studio-v1';
+const CACHE_NAME = 'icono-estudio-v2';
 const ASSETS = [
   './',
   './index.html',
