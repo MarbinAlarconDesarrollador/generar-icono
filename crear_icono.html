@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Icon Designer Lux</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --accent: #4cc9f0;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass: rgba(255, 255, 255, 0.8);
+            --text: #2d3436;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { margin: 0; color: var(--primary); font-weight: 600; }
+        p { color: #636e72; margin-top: 5px; }
+
+        /* Sección de Carga */
+        .upload-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        input[type="text"], select, input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #dfe6e9;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        /* Editor */
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 850px) {
+            .editor-grid { grid-template-columns: 1fr; }
+            .upload-row { grid-template-columns: 1fr; }
+        }
+
+        canvas {
+            background: #fff;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 100%;
+            height: auto;
+        }
+
+        .controls-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #b2bec3;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+            accent-color: var(--primary);
+        }
+
+        .btn-download {
+            grid-column: span 2;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-download:hover {
+            background: #3651d1;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(67, 97, 238, 0.3);
+        }
+
+        .separator {
+            grid-column: span 2;
+            height: 1px;
+            background: #eee;
+            margin: 10px 0;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+ 
+    <header style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+    <img src="./img/logo.png" alt="Logo Empresa" style="min-height: 150px; max-height: 250px; width: auto; border-radius: 50%; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);">
+    <div style="text-align: left;">
+        <h1>Icono Estudio</h1>
+        <p>Herramienta Corporativa de Diseño</p>
+    </div>
+</header>
+
+    <div class="upload-row">
+        <div class="input-card">
+            <label>Subir Imagen Local</label>
+            <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this)">
+        </div>
+        <div class="input-card">
+            <label>Pegar URL Directa</label>
+            <input type="text" id="urlInput" placeholder="https://ejemplo.com/logo.png" onchange="loadFromUrl()">
+        </div>
+    </div>
+
+    <div id="editorArea" class="hidden">
+        <div class="editor-grid">
+            <div style="text-align: center;">
+                <canvas id="mainCanvas" width="512" height="512"></canvas>
+                <div style="margin-top: 15px; color: #b2bec3; font-size: 14px;">Previsualización 512x512</div>
+            </div>
+
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label>Zoom</label>
+                    <input type="range" id="zoom" min="0.1" max="3" step="0.01" value="0.8">
+                </div>
+                <div class="control-group">
+                    <label>Color Fondo</label>
+                    <input type="color" id="bgColor" value="#ffffff" style="height: 40px; padding: 2px; border: 1px solid #eee; background: white;">
+                </div>
+                <div class="control-group">
+                    <label>Desplazar X</label>
+                    <input type="range" id="posX" min="-250" max="250" value="0">
+                </div>
+                <div class="control-group">
+                    <label>Desplazar Y</label>
+                    <input type="range" id="posY" min="-250" max="250" value="0">
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="control-group"><label>Brillo</label><input type="range" id="filtBright" min="0" max="200" value="100"></div>
+                <div class="control-group"><label>Saturación</label><input type="range" id="filtSat" min="0" max="200" value="100"></div>
+                <div class="control-group" style="grid-column: span 2;"><label>Contraste</label><input type="range" id="filtContrast" min="0" max="200" value="100"></div>
+
+                <div class="control-group" style="grid-column: span 2; flex-direction: row; gap: 10px; align-items: center;">
+                    <input type="checkbox" id="useCircle" checked style="width: 18px; height: 18px;">
+                    <label style="margin:0">Añadir base circular blanca</label>
+                </div>
+
+                <div class="separator"></div>
+
+                <div class="control-group">
+                    <label>Formato de Salida</label>
+                    <select id="imgFormat">
+                        <option value="image/png">PNG</option>
+                        <option value="image/jpeg">JPG</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Tamaño Final</label>
+                    <select id="targetSize">
+                        <option value="512">512 x 512 px</option>
+                        <option value="192">192 x 192 px</option>
+                        <option value="144">144 x 144 px</option>
+                        <option value="1024">1024 x 1024 px</option>
+                    </select>
+                </div>
+
+                <button class="btn-download" onclick="downloadIcon()">DESCARGAR ICONO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    let img = new Image();
+
+    function handleFile(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = e => { img.onload = startEditor; img.src = e.target.result; };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function loadFromUrl() {
+        const url = document.getElementById('urlInput').value;
+        if (!url) return;
+        img.crossOrigin = "anonymous";
+        img.onload = startEditor;
+        img.onerror = () => alert("Error de carga. Verifica la URL o los permisos de la imagen.");
+        img.src = url;
+    }
+
+    function startEditor() {
+        document.getElementById('editorArea').classList.remove('hidden');
+        draw();
+    }
+
+    document.querySelectorAll('input, select').forEach(el => el.oninput = draw);
+
+    function draw() {
+        const size = 512;
+        const zoom = parseFloat(document.getElementById('zoom').value);
+        const ox = parseInt(document.getElementById('posX').value);
+        const oy = parseInt(document.getElementById('posY').value);
+        
+        ctx.clearRect(0, 0, size, size);
+        
+        // Fondo
+        ctx.fillStyle = document.getElementById('bgColor').value;
+        ctx.fillRect(0, 0, size, size);
+
+        // Círculo blanco
+        if (document.getElementById('useCircle').checked) {
+            ctx.fillStyle = 'white';
+            ctx.shadowColor = 'rgba(0,0,0,0.05)';
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0; // Reset shadow
+        }
+
+        // Filtros
+        const bright = document.getElementById('filtBright').value;
+        const sat = document.getElementById('filtSat').value;
+        const contrast = document.getElementById('filtContrast').value;
+        ctx.filter = `brightness(${bright}%) saturate(${sat}%) contrast(${contrast}%)`;
+
+        // Imagen
+        const aspect = img.width / img.height;
+        let w = size * zoom, h = size * zoom;
+        if (aspect > 1) h = w / aspect; else w = h * aspect;
+
+        ctx.drawImage(img, (size - w) / 2 + ox, (size - h) / 2 + oy, w, h);
+        ctx.filter = 'none';
+    }
+
+    function downloadIcon() {
+        const targetSize = parseInt(document.getElementById('targetSize').value);
+        const format = document.getElementById('imgFormat').value;
+        const ext = format.split('/')[1];
+
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = targetSize;
+        tempCanvas.height = targetSize;
+        const tempCtx = tempCanvas.getContext('2d');
+
+        tempCtx.drawImage(canvas, 0, 0, 512, 512, 0, 0, targetSize, targetSize);
+
+        const link = document.createElement('a');
+        link.download = `pwa-icon-${targetSize}.${ext}`;
+        link.href = tempCanvas.toDataURL(format, 0.95);
+        link.click();
+    }
+</script>
+</body>
+</html>

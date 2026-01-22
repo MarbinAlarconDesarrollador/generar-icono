@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icono Estudio | PWA Designer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4361ee">
+    <link rel="apple-touch-icon" href="./img/logo.png">
+</head>
+
+<body>
+
+    <div class="container">
+         <button id="shareBtn" class="btn-share">COMPARTIR ICONO 📤</button>
+        <header class="main-header">
+            <img src="./img/logo.png" alt="Logo Empresa" class="brand-logo">
+            <div class="header-text">
+                <h1>Icono Estudio</h1>
+                <p>Herramienta Corporativa de Diseño</p>
+            </div>
+        </header>
+       
+        
+        <section class="instructions-card">
+            <details>
+                <summary>📖 ¿Cómo usar esta herramienta? (Click para desplegar)</summary>
+                <div class="steps-grid">
+                    <div class="step">
+                        <span>1</span>
+                        <p><strong>Carga:</strong> Sube una imagen desde tu equipo o pega un enlace directo de internet.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <span>2</span>
+                        <p><strong>Ajusta:</strong> Usa el Zoom y los ejes X/Y para centrar tu logo. Cambia el color de
+                            fondo según tu marca.</p>
+                    </div>
+                    <div class="step">
+                        <span>3</span>
+                        <p><strong>Filtros:</strong> Mejora la visibilidad ajustando el brillo o contraste si la imagen
+                            es muy oscura.</p>
+                    </div>
+                    <div class="step">
+                        <span>4</span>
+                        <p><strong>Exporta:</strong> Selecciona el formato (PNG para logos) y el tamaño deseado, luego
+                            pulsa descargar.</p>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+        <div class="upload-row">
+            <div class="input-card">
+                <label for="fileInput">Subir Imagen Local</label>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <div class="input-card">
+                <label for="urlInput">Pegar URL Directa</label>
+                <input type="text" id="urlInput" placeholder="https://ejemplo.com/logo.png">
+            </div>
+        </div>
+
+        <div id="editorArea" class="hidden">
+            <div class="editor-grid">
+                <div class="canvas-container">
+                    <canvas id="mainCanvas" width="512" height="512"></canvas>
+                    <div class="preview-label">Previsualización 512x512</div>
+                </div>
+
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <label>Zoom</label>
+                        <input type="range" id="zoom" min="0.1" max="3" step="0.01" value="0.8">
+                    </div>
+                    <div class="control-group">
+                        <label>Color Fondo</label>
+                        <input type="color" id="bgColor" value="#ffffff" class="color-picker">
+                    </div>
+                    <div class="control-group">
+                        <label>Desplazar X</label>
+                        <input type="range" id="posX" min="-250" max="250" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label>Desplazar Y</label>
+                        <input type="range" id="posY" min="-250" max="250" value="0">
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="control-group"><label>Brillo</label><input type="range" id="filtBright" min="0"
+                            max="200" value="100"></div>
+                    <div class="control-group"><label>Saturación</label><input type="range" id="filtSat" min="0"
+                            max="200" value="100"></div>
+                    <div class="control-group full-span"><label>Contraste</label><input type="range" id="filtContrast"
+                            min="0" max="200" value="100"></div>
+
+                    <div class="control-group full-span checkbox-group">
+                        <input type="checkbox" id="useCircle" checked>
+                        <label for="useCircle">Añadir base circular blanca</label>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="control-group">
+                        <label>Formato de Salida</label>
+                        <select id="imgFormat">
+                            <option value="image/png">PNG</option>
+                            <option value="image/jpeg">JPG</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Tamaño Final</label>
+                        <select id="targetSize">
+                            <option value="512">512 x 512 px</option>
+                            <option value="192">192 x 192 px</option>
+                            <option value="144">144 x 144 px</option>
+                            <option value="1024">1024 x 1024 px</option>
+                        </select>
+                    </div>
+
+                    <button id="downloadBtn" class="btn-download">DESCARGAR ICONO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
