@@ -24,7 +24,7 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     max-width: 1000px;
     width: 100%;
     padding: 40px;
@@ -37,22 +37,59 @@ body {
     justify-content: center;
     gap: 20px;
     margin-bottom: 30px;
+    flex-wrap: wrap;
+    /* Permite que los elementos salten de línea si es necesario */
 }
 
+/* Estilo base (Escritorio) */
 .brand-logo {
-    min-height: 150px;
-    max-height: 250px;
-    width: auto;
+    width: 200px;
+    /* Tamaño fijo o relativo */
+    height: 200px;
+    /* Mismo alto y ancho para mantener el círculo perfecto */
+    object-fit: cover;
+    /* Evita que el logo se estire si no es cuadrado */
     border-radius: 50%;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    /* Para una transición suave al cambiar de tamaño */
+}
+
+/* Ajustes para móviles (Pantallas menores a 600px) */
+@media (max-width: 600px) {
+    .main-header {
+        flex-direction: column;
+        /* Apila el logo sobre el texto en móviles */
+        text-align: center;
+        gap: 10px;
+    }
+
+    .brand-logo {
+        width: 120px;
+        /* Reducimos el tamaño en móviles */
+        height: 120px;
+    }
+
+    .header-text {
+        text-align: center;
+        /* Centra el título y subtítulo en móviles */
+    }
 }
 
 .header-text {
     text-align: left;
 }
 
-h1 { margin: 0; color: var(--primary); font-weight: 600; }
-p { color: #636e72; margin-top: 5px; }
+h1 {
+    margin: 0;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+p {
+    color: #636e72;
+    margin-top: 5px;
+}
 
 /* Sección de Carga */
 .upload-row {
@@ -66,10 +103,12 @@ p { color: #636e72; margin-top: 5px; }
     background: white;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
-input[type="text"], select, input[type="file"] {
+input[type="text"],
+select,
+input[type="file"] {
     width: 100%;
     padding: 12px;
     margin-top: 8px;
@@ -94,7 +133,7 @@ input[type="text"], select, input[type="file"] {
 canvas {
     background: #fff;
     border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     max-width: 100%;
     height: auto;
 }
@@ -180,11 +219,18 @@ input[type="range"] {
     margin: 10px 0;
 }
 
-.hidden { display: none; }
+.hidden {
+    display: none;
+}
 
 @media (max-width: 850px) {
-    .editor-grid { grid-template-columns: 1fr; }
-    .upload-row { grid-template-columns: 1fr; }
+    .editor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Estilos para la Guía de Usuario */
@@ -193,7 +239,7 @@ input[type="range"] {
     margin-bottom: 30px;
     border-radius: 15px;
     padding: 10px 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
     text-align: left;
 }
 
@@ -242,7 +288,8 @@ details summary {
 
 .btn-share {
     grid-column: span 2;
-    background: var(--accent); /* Usamos el color celeste que ya definimos */
+    background: var(--accent);
+    /* Usamos el color celeste que ya definimos */
     color: white;
     border: none;
     padding: 18px;
